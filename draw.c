@@ -59,44 +59,68 @@ void scanline_convert( struct matrix *points, int i, screen s, color c, zbuffer 
   float x0 = points->m[0][bottom_point_index];
   float x1 = points->m[0][bottom_point_index];
   float y = points->m[1][bottom_point_index];
+  float z0 = points->m[2][bottom_point_index];
+  float z1 = points->m[2][bottom_point_index];
   float dy = 1;
+  
   float dx0;
-  if ( points->m[1][top_point_index] - points->m[1][bottom_point_index] == 0 )
+  float dz0;
+  if ( points->m[1][top_point_index] - points->m[1][bottom_point_index] == 0 ) {
     dx0 = 0;
-  else
+    dz0 = 0;
+  }
+  else {
     dx0 = (points->m[0][top_point_index] - points->m[0][bottom_point_index]) / (points->m[1][top_point_index] - points->m[1][bottom_point_index]);
+    dz0 = (points->m[2][top_point_index] - points->m[2][bottom_point_index]) / (points->m[1][top_point_index] - points->m[1][bottom_point_index]);
+  }
 
   float dx1;
-  if ( points->m[1][middle_point_index] - points->m[1][bottom_point_index] == 0 )
+  float dz1;
+  if ( points->m[1][middle_point_index] - points->m[1][bottom_point_index] == 0 ) {
     dx1 = 0;
-  else
+    dz1 = 0;
+  }
+  else {
     dx1 = (points->m[0][middle_point_index] - points->m[0][bottom_point_index]) / (points->m[1][middle_point_index] - points->m[1][bottom_point_index]);
-      
+    dz1 = (points->m[2][middle_point_index] - points->m[2][bottom_point_index]) / (points->m[1][middle_point_index] - points->m[1][bottom_point_index]);
+  }
+
+  // scan line up to middle point
   while ( y <= points->m[1][middle_point_index] ) {
     c.green = (i * 13) % 256;
     c.blue = (i * 17) % 256;
     c.red = (i * 23) % 256;
-    draw_line((int)x0, (int)y, 20, (int)x1, (int)y, 20, s, zb, c); // replace w/ real z values
+    draw_line((int)x0, (int)y, z0, (int)x1, (int)y, z1, s, zb, c); // replace w/ real z values
     x0 += dx0;
     x1 += dx1;
+    z0 += dz0;
+    z1 += dz1;
     y += dy;
   }
-      
-  if ( points->m[1][top_point_index] - points->m[1][middle_point_index] == 0 )
+
+  
+  if ( points->m[1][top_point_index] - points->m[1][middle_point_index] == 0 ) {
     dx1 = 0;
-  else
+    dz1 = 0;
+  }
+  else {
     dx1 = (points->m[0][top_point_index] - points->m[0][middle_point_index]) / (points->m[1][top_point_index] - points->m[1][middle_point_index]);
+    dz1 = (points->m[2][top_point_index] - points->m[2][middle_point_index]) / (points->m[1][top_point_index] - points->m[1][middle_point_index]);
+  }
+  // set x1 and z1 to midpoint
   x1 = points->m[0][middle_point_index];
-      
+  z1 = points->m[2][middle_point_index];
+  // scan line from middle point to top point
   while ( y < max ) {
     c.green = (i * 13) % 256;
     c.blue = (i * 17) % 256;
     c.red = (i * 23) % 256;
-    draw_line((int)x0, (int)y, 20, (int)x1, (int)y, 20, s, zb, c); // replace w/ real z values
+    draw_line((int)x0, (int)y, z0, (int)x1, (int)y, z1, s, zb, c);
     x0 += dx0;
     x1 += dx1;
+    z0 += dz0;
+    z1 += dz1;
     y += dy;
-
   }
 }
 
@@ -156,7 +180,8 @@ void scanline_convert( struct matrix *points, int i, screen s, color c, zbuffer 
 	scanline_convert( polygons, point, s, c, zb );
 	c.red = 0; 
 	c.green = 0;
-	c.blue = 0; 
+	c.blue = 0;
+	/*
 	draw_line( polygons->m[0][point],
 		   polygons->m[1][point],
 		   polygons->m[2][point],
@@ -178,6 +203,7 @@ void scanline_convert( struct matrix *points, int i, screen s, color c, zbuffer 
 		   polygons->m[1][point+2],
 		   polygons->m[2][point+2],
 		   s, zb, c);
+	*/
       }
     }
   }
