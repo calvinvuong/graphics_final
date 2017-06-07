@@ -178,10 +178,11 @@ void scanline_convert( struct matrix *points, int i, screen s, color c, zbuffer 
       
 	//printf("polygon %d\n", point);
 	scanline_convert( polygons, point, s, c, zb );
+	/*
 	c.red = 0; 
 	c.green = 0;
 	c.blue = 0;
-	/*
+
 	draw_line( polygons->m[0][point],
 		   polygons->m[1][point],
 		   polygons->m[2][point],
@@ -204,6 +205,7 @@ void scanline_convert( struct matrix *points, int i, screen s, color c, zbuffer 
 		   polygons->m[2][point+2],
 		   s, zb, c);
 	*/
+	
       }
     }
   }
@@ -700,7 +702,6 @@ void scanline_convert( struct matrix *points, int i, screen s, color c, zbuffer 
     else
       dz = (z1 - z0) / (double)(loop_end - loop_start);
     while ( loop_start < loop_end ) {
-      printf("z: %f\n", z);
       plot( s, zb, c, x, y, z );
       if ( (wide && ((A > 0 && d > 0) ||
 		     (A < 0 && d < 0)))
@@ -720,5 +721,5 @@ void scanline_convert( struct matrix *points, int i, screen s, color c, zbuffer 
       loop_start++;
     } //end drawing loop
     plot( s, zb, c, x1, y1, z );
-    printf("END LINE\n");
+
   } //end draw_line
