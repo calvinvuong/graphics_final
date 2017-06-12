@@ -1,0 +1,7 @@
+frames 25
+basename boxes_spin
+push
+move 250 250 0
+rotate y 360 spin
+box 100 400 0 300 300 50
+vary spin 0 24 0 1

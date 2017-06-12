@@ -1,4 +1,4 @@
-frames 150
+frames 100
 basename planets
 push
 move -100 250 0
@@ -15,9 +15,9 @@ push
 move 0 200 0
 rotate z 360 rot
 sphere 0 0 0 50
-vary shift 0 150 0 1
-vary shake1 0 74 0 1
-vary shake2 75 149 0 1
-vary shake3 0 150 0 2
-vary orbit 0 150 0 1
-vary rot 0 150 0 2
+vary shift 0 100 0 1
+vary shake1 0 49 0 1
+vary shake2 50 99 0 1
+vary shake3 0 100 0 2
+vary orbit 0 100 0 1
+vary rot 0 100 0 2
