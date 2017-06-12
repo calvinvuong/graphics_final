@@ -1,0 +1,23 @@
+frames 100
+basename planets
+push
+move -100 250 0
+move 700 0 0 shift
+rotate x 360 shake1
+rotate x -360 shake2
+rotate y 360 shake3
+push
+rotate z 360 orbit
+sphere 0 0 0 100
+torus 0 0 0 25 150
+pop
+push
+move 0 200 0
+rotate z 360 rot
+sphere 0 0 0 50
+vary shift 0 100 0 1
+vary shake1 0 49 0 1
+vary shake2 50 99 0 1
+vary shake3 0 100 0 2
+vary orbit 0 100 0 1
+vary rot 0 100 0 2
